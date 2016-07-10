@@ -1,3 +1,7 @@
+# 1.0.5
+
+* Render `"_links"` by default.
+
 # 1.0.4
 
 * Representable < 2.4.
