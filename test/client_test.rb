@@ -19,18 +19,18 @@ class ClientTest < MiniTest::Spec
   describe "links" do
     representer_for([Roar::JSON, Roar::Hypermedia]) do
       property :name
-      link(:self) { never_call_me! }
+      link(:self) { "/songs/1" }
     end
 
-    it "suppresses rendering" do
+    it "renders links" do
       song.name = "Silenced"
-      song.to_json.must_equal %{{\"name\":\"Silenced\",\"links\":[]}}
+      song.to_json.must_equal %({\"name\":\"Silenced\",\"links\":[{\"rel\":\"self\",\"href\":\"/songs/1\"}]})
     end
 
     # since this is considered dangerous, we test the mutuable options.
-    it "adds links: false to options" do
+    it "renders links by default" do
       song.to_hash(options = {})
-      options.must_equal({:links => false})
+      options.must_equal({:links=>true})
     end
   end
 end

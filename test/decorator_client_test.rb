@@ -26,7 +26,7 @@ class DecoratorClientTest < MiniTest::Spec
   before do
     @crew = Crew.new
     @client = CrewClient.new(@crew)
-  end    
+  end
 
   describe 'HttpVerbs integration' do
     describe '#get' do
@@ -50,15 +50,15 @@ class DecoratorClientTest < MiniTest::Spec
   end
 
   describe '#to_hash' do
-    it 'suppresses rendering links' do
+    it 'renders links' do
       @crew.moniker = 'Silence'
-      @client.to_json.must_equal %{{\"name\":\"Silence\",\"links\":[]}}
+      @client.to_json.must_equal %({\"name\":\"Silence\",\"links\":[{\"rel\":\"self\",\"href\":\"http://bands/Silence\"}]})
     end
     
     # since this is considered dangerous, we test the mutuable options.
-    it "adds links: false to options" do
+    it "renders links by default" do
       @client.to_hash(options = {})
-      options.must_equal({:links => false})
+      options.must_equal({:links => true})
     end
   end
 end
