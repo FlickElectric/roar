@@ -2,7 +2,7 @@ require "roar/http_verbs"
 
 module Roar
 
-  # Mix in HttpVerbs. 
+  # Mix in HttpVerbs.
   module Client
     include HttpVerbs
 
@@ -11,7 +11,6 @@ module Roar
       base.instance_eval do
         representable_attrs.each do |attr|
           name = attr.name
-          next if name == "links" # ignore hyperlinks.
 
           # TODO: could anyone please make this better?
           instance_eval %Q{
@@ -28,12 +27,14 @@ module Roar
     end
 
     def to_hash(options={})
-      options[:links] ||= false
+      options[:links] ||= true
+
       super(options)
     end
 
     def to_xml(options={}) # sorry, but i'm not even sure if anyone uses this module.
-      options[:links] ||= false
+      options[:links] ||= true
+
       super(options)
     end
   end
