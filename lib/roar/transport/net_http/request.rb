@@ -12,6 +12,11 @@ module Roar
           @options = options
 
           @http = Net::HTTP.new(uri.host, uri.port)
+
+          unless options[:read_timeout].nil?
+            @http.read_timeout = options[:read_timeout]
+          end
+
           unless options[:pem_file].nil?
             pem = File.read(options[:pem_file])
             @http.use_ssl = true
